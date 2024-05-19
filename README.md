@@ -10,4 +10,6 @@
 ### Сравнение плоских файлов (JSON):
 https://asciinema.org/a/Yi0ytEZSOk4PYDWIclMiBtNgq
 
+### Сравнение плоских файлов (YAML):
+https://asciinema.org/a/nIGO5Ws6491yypo2rfmWqx1gu
 

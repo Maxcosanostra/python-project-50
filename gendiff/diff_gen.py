@@ -1,10 +1,7 @@
-import json
+from gendiff.parsing import read_file
 
 
-def generate_diff(file_path1, file_path2):
-    data1 = json.load(open(file_path1))
-    data2 = json.load(open(file_path2))
-
+def make_diff(data1, data2):
     diff = {}
     keys = set(data1.keys()) | set(data2.keys())
 
@@ -22,8 +19,23 @@ def generate_diff(file_path1, file_path2):
             diff[f'- {key}'] = value1
             diff[f'+ {key}'] = value2
 
-    result = ['{\n']
+    return diff
+
+
+def setup_diff(diff):
+    result = ['{']
     for key, value in diff.items():
-        result.append(f'  {key}: {value}\n')
-    result.append('}')
+        if isinstance(value, bool):
+            value = str(value).lower()
+        elif isinstance(value, str):
+            value = f'"{value}"'
+        result.append(f'\n  {key}: {value}')
+    result.append('\n}')
     return ''.join(result)
+
+
+def generate_diff(file_path1, file_path2):
+    data1 = read_file(file_path1)
+    data2 = read_file(file_path2)
+    diff = make_diff(data1, data2)
+    return setup_diff(diff)

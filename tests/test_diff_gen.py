@@ -3,21 +3,76 @@ from gendiff.diff_gen import generate_diff
 
 
 @pytest.fixture
-def file1_path():
-    return 'gendiff/files/file1.json'
+def json_file1_path():
+    return 'file1.json'
 
 
 @pytest.fixture
-def file2_path():
-    return 'gendiff/files/file2.json'
+def json_file2_path():
+    return 'file2.json'
 
 
-def test_generate_diff(file1_path, file2_path):
+@pytest.fixture
+def yaml_file1_path():
+    return 'file1.yml'
+
+
+@pytest.fixture
+def yaml_file2_path():
+    return 'file2.yml'
+
+
+def test_generate_diff_json(json_file1_path, json_file2_path):
     expected_diff = (
-        '- follow: False\n'
-        '  proxy: 123.234.53.22\n'
-        '- timeout: 50\n'
-        '+ timeout: 20\n'
-        '+ verbose: True\n'
+        '{\n'
+        '  - follow: false\n'
+        '    host: "hexlet.io"\n'
+        '  - proxy: "123.234.53.22"\n'
+        '  - timeout: 50\n'
+        '  + timeout: 20\n'
+        '  + verbose: true\n'
+        '}'
     )
-    assert generate_diff(file1_path, file2_path) == expected_diff
+    assert generate_diff(json_file1_path, json_file2_path) == expected_diff
+
+
+def test_generate_diff_yaml(yaml_file1_path, yaml_file2_path):
+    expected_diff = (
+        '{\n'
+        '  - follow: false\n'
+        '    host: "hexlet.io"\n'
+        '  - proxy: "123.234.53.22"\n'
+        '  - timeout: 50\n'
+        '  + timeout: 20\n'
+        '  + verbose: true\n'
+        '}'
+    )
+    assert generate_diff(yaml_file1_path, yaml_file2_path) == expected_diff
+
+
+def test_generate_diff_json_yaml(json_file1_path, yaml_file2_path):
+    expected_diff = (
+        '{\n'
+        '  - follow: false\n'
+        '    host: "hexlet.io"\n'
+        '  - proxy: "123.234.53.22"\n'
+        '  - timeout: 50\n'
+        '  + timeout: 20\n'
+        '  + verbose: true\n'
+        '}'
+    )
+    assert generate_diff(json_file1_path, yaml_file2_path) == expected_diff
+
+
+def test_generate_diff_yaml_json(yaml_file1_path, json_file2_path):
+    expected_diff = (
+        '{\n'
+        '  - follow: false\n'
+        '    host: "hexlet.io"\n'
+        '  - proxy: "123.234.53.22"\n'
+        '  - timeout: 50\n'
+        '  + timeout: 20\n'
+        '  + verbose: true\n'
+        '}'
+    )
+    assert generate_diff(yaml_file1_path, json_file2_path) == expected_diff

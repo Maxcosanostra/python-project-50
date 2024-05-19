@@ -14,8 +14,8 @@ def main():
     parser.add_argument('-f', '--format', help='set format of output')
     args = parser.parse_args()
 
-    file1 = 'gendiff/files/file1.json'
-    file2 = 'gendiff/files/file2.json'
+    file1 = args.first_file
+    file2 = args.second_file
     output_format = args.format
 
     diff = generate_diff(file1, file2)
