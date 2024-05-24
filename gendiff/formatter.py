@@ -16,19 +16,19 @@ def format_line(key, value, indent):
 def process_node(key, node, depth):
     indent = '  ' * depth
     if node['type'] == 'added':
-        return format_line(
+        result = format_line(
             f"+ {key}",
             format_value(node['value'], depth + 1),
             indent
         )
     elif node['type'] == 'removed':
-        return format_line(
+        result = format_line(
             f"- {key}",
             format_value(node['value'], depth + 1),
             indent
         )
     elif node['type'] == 'unchanged':
-        return format_line(
+        result = format_line(
             f"  {key}",
             format_value(node['value'], depth + 1),
             indent
@@ -36,17 +36,18 @@ def process_node(key, node, depth):
     elif node['type'] == 'changed':
         old_value = format_value(node['old_value'], depth + 1)
         new_value = format_value(node['new_value'], depth + 1)
-        return [
+        result = [
             format_line(f"- {key}", old_value, indent),
             format_line(f"+ {key}", new_value, indent)
         ]
     elif node['type'] == 'nested':
         nested_diff = stylish(node['children'], depth + 1)
-        return format_line(
+        result = format_line(
             f"  {key}",
             nested_diff,
             indent
         )
+    return result
 
 
 def stylish(diff, depth=0):
