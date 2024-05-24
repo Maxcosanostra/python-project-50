@@ -13,3 +13,5 @@ https://asciinema.org/a/Yi0ytEZSOk4PYDWIclMiBtNgq
 ### Сравнение плоских файлов (YAML):
 https://asciinema.org/a/nIGO5Ws6491yypo2rfmWqx1gu
 
+### Рекурсивное сравнение
+https://asciinema.org/a/ywSbxIHLxJpXE5K5lvI4TymSC

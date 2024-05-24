@@ -1,4 +1,5 @@
 from gendiff.parsing import read_file
+from gendiff.formatter import stylish
 
 
 def make_diff(data1, data2):
@@ -9,33 +10,29 @@ def make_diff(data1, data2):
         value1 = data1.get(key)
         value2 = data2.get(key)
 
-        if value1 == value2:
-            diff[f'  {key}'] = value1
-        elif key not in data1:
-            diff[f'+ {key}'] = value2
+        if key not in data1:
+            diff[key] = {'type': 'added', 'value': value2}
         elif key not in data2:
-            diff[f'- {key}'] = value1
+            diff[key] = {'type': 'removed', 'value': value1}
+        elif isinstance(value1, dict) and isinstance(value2, dict):
+            diff[key] = {
+                'type': 'nested',
+                'children': make_diff(value1, value2)
+            }
+        elif value1 != value2:
+            diff[key] = {
+                'type': 'changed',
+                'old_value': value1,
+                'new_value': value2
+            }
         else:
-            diff[f'- {key}'] = value1
-            diff[f'+ {key}'] = value2
+            diff[key] = {'type': 'unchanged', 'value': value1}
 
     return diff
 
 
-def setup_diff(diff):
-    result = ['{']
-    for key, value in diff.items():
-        if isinstance(value, bool):
-            value = str(value).lower()
-        elif isinstance(value, str):
-            value = f'"{value}"'
-        result.append(f'\n  {key}: {value}')
-    result.append('\n}')
-    return ''.join(result)
-
-
-def generate_diff(file_path1, file_path2):
+def generate_diff(file_path1, file_path2, formatter=stylish):
     data1 = read_file(file_path1)
     data2 = read_file(file_path2)
     diff = make_diff(data1, data2)
-    return setup_diff(diff)
+    return formatter(diff)
