@@ -1,4 +1,4 @@
-#Вычислитель отличий / Generate Difference
+### Вычислитель отличий / Generate Difference
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Maxcosanostra/python-project-50/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Maxcosanostra/python-project-50/actions)

@@ -1,7 +1,7 @@
 import pytest
 import json
 import yaml
-from gendiff.diff_gen import make_diff, generate_diff
+from gendiff.generate_diff import make_diff, generate_diff
 from gendiff.formatter import stylish
 import os
 
