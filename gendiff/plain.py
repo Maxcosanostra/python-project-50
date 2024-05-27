@@ -7,12 +7,16 @@ def format_plain(diff):
 def process_diff(node, lines, parent=''):
     for key, value in sorted(node.items()):
         full_path = f"{parent}.{key}" if parent else key
-        if isinstance(value, dict) and 'type' not in value:
-            process_diff(value, lines, full_path)
-        else:
-            result = format_node(full_path, value)
-            if result:
-                lines.append(result)
+        process_key_value(key, value, full_path, lines)
+
+
+def process_key_value(key, value, full_path, lines):
+    if isinstance(value, dict) and 'type' not in value:
+        process_diff(value, lines, full_path)
+    else:
+        result = format_node(full_path, value)
+        if result:
+            lines.append(result)
 
 
 def format_node(full_path, node):
