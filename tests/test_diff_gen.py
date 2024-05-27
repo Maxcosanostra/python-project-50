@@ -76,6 +76,24 @@ expected_diff = {
 }
 
 
+expected_plain_output = (
+    "Property 'common.follow' was added with value: false\n"
+    "Property 'common.setting2' was removed\n"
+    "Property 'common.setting3' was updated. From true to null\n"
+    "Property 'common.setting4' was added with value: 'blah blah'\n"
+    "Property 'common.setting5' was added with value: [complex value]\n"
+    "Property 'common.setting6.doge.wow' was updated. From '' to 'so much'\n"
+    "Property 'common.setting6.ops' was added with value: 'vops'\n"
+    "Property 'group1.baz' was updated. From 'bas' to 'bars'\n"
+    "Property 'group1.nest' was updated. From [complex value] to 'str'\n"
+    "Property 'group2' was removed\n"
+    "Property 'group3' was added with value: [complex value]"
+)
+
+
+expected_json_output = json.dumps(expected_diff, indent=2)
+
+
 @pytest.fixture
 def json_data():
     with open(file1_json) as f1, open(file2_json) as f2:
@@ -99,10 +117,21 @@ def test_make_diff(json_data):
 
 
 def test_generate_diff_json():
-    diff = generate_diff(file1_json, file2_json, formatter=stylish)
+    diff = generate_diff(file1_json, file2_json, format_name='stylish')
     assert diff == stylish(expected_diff)
 
 
 def test_generate_diff_yaml():
-    diff = generate_diff(file1_yaml, file2_yaml, formatter=stylish)
+    diff = generate_diff(file1_yaml, file2_yaml, format_name='stylish')
     assert diff == stylish(expected_diff)
+
+
+def test_generate_diff_plain():
+    diff = generate_diff(file1_json, file2_json, format_name='plain')
+    print("Actual plain output:\n", diff)
+    assert diff == expected_plain_output
+
+
+def test_generate_diff_json_format():
+    diff = generate_diff(file1_json, file2_json, format_name='json')
+    assert diff == expected_json_output
