@@ -6,6 +6,8 @@ def format_value(value, depth):
             lines.append(f"{indent}{key}: {format_value(val, depth + 1)}")
         joined_lines = '\n'.join(lines)
         return '{\n' + joined_lines + '\n' + '  ' * depth + '}'
+    if isinstance(value, bool):
+        return str(value).lower()
     return str(value)
 
 
