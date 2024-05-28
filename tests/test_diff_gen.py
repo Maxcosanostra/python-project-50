@@ -91,7 +91,7 @@ expected_plain_output = (
 )
 
 
-expected_json_output = json.dumps(expected_diff, indent=2)
+expected_json_output = json.dumps(expected_diff, indent=2, sort_keys=True)
 
 
 @pytest.fixture
@@ -133,5 +133,5 @@ def test_generate_diff_plain():
 
 
 def test_generate_diff_json_format():
-    diff = generate_diff(file1_json, file2_json, format_name='json')
-    assert diff == expected_json_output
+    actual_diff_json = generate_diff(file1_json, file2_json, format_name='json')
+    assert json.loads(actual_diff_json) == json.loads(expected_json_output)
