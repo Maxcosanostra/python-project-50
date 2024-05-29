@@ -5,7 +5,9 @@ import os
 
 def read_file(file_path):
     if not os.path.isabs(file_path):
-        file_path = os.path.join(os.path.dirname(__file__), 'files', file_path)
+        file_path = os.path.join(
+            os.path.dirname(__file__), '../tests/fixtures', file_path
+        )
     with open(file_path, 'r') as file:
         if file_path.endswith('.json'):
             return json.load(file)
