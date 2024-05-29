@@ -170,6 +170,8 @@ def test_generate_diff_flat_json():
     )
     normalized_diff = normalize_output(diff)
     normalized_expected = normalize_output(expected_flat_diff)
+    print(f"Normalized diff: {normalized_diff}")
+    print(f"Normalized expected: {normalized_expected}")
     assert normalized_diff == normalized_expected
 
 
@@ -179,5 +181,6 @@ def test_generate_diff_flat_yaml():
     )
     normalized_diff = normalize_output(diff)
     normalized_expected = normalize_output(expected_flat_diff)
+    print(f"Normalized diff: {normalized_diff}")
+    print(f"Normalized expected: {normalized_expected}")
     assert normalized_diff == normalized_expected
-
