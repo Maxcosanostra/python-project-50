@@ -6,14 +6,30 @@ from gendiff.formatter import stylish
 import os
 
 
-file1_json = os.path.join(os.path.dirname(__file__), '../gendiff/files/file1.json')
-file2_json = os.path.join(os.path.dirname(__file__), '../gendiff/files/file2.json')
-file1_yaml = os.path.join(os.path.dirname(__file__), '../gendiff/files/file1.yml')
-file2_yaml = os.path.join(os.path.dirname(__file__), '../gendiff/files/file2.yml')
-flat_file1_json = os.path.join(os.path.dirname(__file__), '../gendiff/files/flat_file1.json')
-flat_file2_json = os.path.join(os.path.dirname(__file__), '../gendiff/files/flat_file2.json')
-flat_file1_yaml = os.path.join(os.path.dirname(__file__), '../gendiff/files/flat_file1.yml')
-flat_file2_yaml = os.path.join(os.path.dirname(__file__), '../gendiff/files/flat_file2.yml')
+file1_json = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/file1.json'
+)
+file2_json = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/file2.json'
+)
+file1_yaml = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/file1.yml'
+)
+file2_yaml = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/file2.yml'
+)
+flat_file1_json = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/flat_file1.json'
+)
+flat_file2_json = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/flat_file2.json'
+)
+flat_file1_yaml = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/flat_file1.yml'
+)
+flat_file2_yaml = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/flat_file2.yml'
+)
 
 
 expected_diff = {
@@ -159,18 +175,23 @@ def test_generate_diff_json_format():
 
 
 def normalize_output(diff):
-    return diff.replace("False", "false").replace("True", "true").replace(' ', '').replace('\n', '')
+    return diff.replace("False", "false").replace("True", "true")\
+        .replace(' ', '').replace('\n', '')
 
 
 def test_generate_diff_flat_json():
-    diff = generate_diff(flat_file1_json, flat_file2_json, format_name='stylish')
+    diff = generate_diff(
+        flat_file1_json, flat_file2_json, format_name='stylish'
+    )
     normalized_diff = normalize_output(diff)
     normalized_expected = normalize_output(expected_flat_diff)
     assert normalized_diff == normalized_expected
 
 
 def test_generate_diff_flat_yaml():
-    diff = generate_diff(flat_file1_yaml, flat_file2_yaml, format_name='stylish')
+    diff = generate_diff(
+        flat_file1_yaml, flat_file2_yaml, format_name='stylish'
+    )
     normalized_diff = normalize_output(diff)
     normalized_expected = normalize_output(expected_flat_diff)
     assert normalized_diff == normalized_expected
