@@ -150,7 +150,6 @@ def test_generate_diff_yaml():
 
 def test_generate_diff_plain():
     diff = generate_diff(file1_json, file2_json, format_name='plain')
-    print("Actual plain output:\n", diff)
     assert diff == expected_plain_output
 
 
@@ -160,27 +159,18 @@ def test_generate_diff_json_format():
 
 
 def normalize_output(diff):
-    return diff.replace("False", "false").replace("True", "true")\
-               .replace(' ', '').replace('\n', '')
+    return diff.replace("False", "false").replace("True", "true").replace(' ', '').replace('\n', '')
 
 
 def test_generate_diff_flat_json():
-    diff = generate_diff(
-        flat_file1_json, flat_file2_json, format_name='stylish'
-    )
+    diff = generate_diff(flat_file1_json, flat_file2_json, format_name='stylish')
     normalized_diff = normalize_output(diff)
     normalized_expected = normalize_output(expected_flat_diff)
-    print(f"Normalized diff: {normalized_diff}")
-    print(f"Normalized expected: {normalized_expected}")
     assert normalized_diff == normalized_expected
 
 
 def test_generate_diff_flat_yaml():
-    diff = generate_diff(
-        flat_file1_yaml, flat_file2_yaml, format_name='stylish'
-    )
+    diff = generate_diff(flat_file1_yaml, flat_file2_yaml, format_name='stylish')
     normalized_diff = normalize_output(diff)
     normalized_expected = normalize_output(expected_flat_diff)
-    print(f"Normalized diff: {normalized_diff}")
-    print(f"Normalized expected: {normalized_expected}")
     assert normalized_diff == normalized_expected
