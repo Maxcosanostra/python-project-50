@@ -1,1 +1,1 @@
-from .generate_diff import generate_diff, make_diff
+from .diff_builder import generate_diff, build_diff

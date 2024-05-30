@@ -2,7 +2,7 @@ import pytest
 import json
 import yaml
 import os
-from gendiff.generate_diff import make_diff, generate_diff
+from gendiff.diff_builder import build_diff, generate_diff
 from gendiff.formatter import stylish
 
 
@@ -73,9 +73,9 @@ def flat_yaml_data():
     return data1, data2
 
 
-def test_make_diff(json_data):
+def test_build_diff(json_data):
     data1, data2 = json_data
-    diff = make_diff(data1, data2)
+    diff = build_diff(data1, data2)
     assert diff == expected_diff
 
 
