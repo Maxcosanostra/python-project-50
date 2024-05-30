@@ -1,9 +1,3 @@
-from gendiff.parser import read_file
-from gendiff.formatter import stylish
-from gendiff.plain import format_plain
-from gendiff.formatter_json import format_json
-
-
 def build_diff(data1, data2):
     diff = {}
     keys = set(data1.keys()) | set(data2.keys())
@@ -44,18 +38,3 @@ def build_diff(data1, data2):
             }
 
     return diff
-
-
-def generate_diff(file_path1, file_path2, format_name='stylish'):
-    data1 = read_file(file_path1)
-    data2 = read_file(file_path2)
-    diff = build_diff(data1, data2)
-
-    if format_name == 'plain':
-        return format_plain(diff)
-    elif format_name == 'stylish':
-        return stylish(diff)
-    elif format_name == 'json':
-        return format_json(diff)
-    else:
-        raise ValueError(f"Unsupported format: {format_name}")

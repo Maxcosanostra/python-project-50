@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
-from gendiff.diff_builder import generate_diff
+from gendiff.generate_diff import generate_diff
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
     file2 = args.second_file
     output_format = args.format
 
-    diff = generate_diff(file1, file2, format_name=output_format)
+    diff = generate_diff(file1, file2, formatter=output_format)
     print(diff)
 
 

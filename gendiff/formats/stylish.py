@@ -43,7 +43,7 @@ def process_node(key, node, depth):
             format_line(f"+ {key}", new_value, indent)
         ]
     elif node['type'] == 'nested':
-        nested_diff = stylish(node['children'], depth + 1)
+        nested_diff = make_stylish_result(node['children'], depth + 1)
         result = format_line(
             f"  {key}",
             nested_diff,
@@ -52,7 +52,7 @@ def process_node(key, node, depth):
     return result
 
 
-def stylish(diff, depth=0):
+def make_stylish_result(diff, depth=0):
     lines = []
     for key, node in sorted(diff.items()):
         processed = process_node(key, node, depth)

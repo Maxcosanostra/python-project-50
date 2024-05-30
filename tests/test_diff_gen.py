@@ -1,44 +1,119 @@
 import pytest
 import json
 import yaml
-import os
-from gendiff.diff_builder import build_diff, generate_diff
+from gendiff.generate_diff import make_diff, generate_diff
 from gendiff.formatter import stylish
+import os
 
 
-FIXTURES_DIR = os.path.join(os.path.dirname(__file__), 'fixtures')
+file1_json = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/file1.json'
+)
+file2_json = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/file2.json'
+)
+file1_yaml = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/file1.yml'
+)
+file2_yaml = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/file2.yml'
+)
+flat_file1_json = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/flat_file1.json'
+)
+flat_file2_json = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/flat_file2.json'
+)
+flat_file1_yaml = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/flat_file1.yml'
+)
+flat_file2_yaml = os.path.join(
+    os.path.dirname(__file__), '../gendiff/files/flat_file2.yml'
+)
 
 
-file1_json = os.path.join(FIXTURES_DIR, 'file1.json')
-file2_json = os.path.join(FIXTURES_DIR, 'file2.json')
+expected_diff = {
+    "common": {
+        "type": "nested",
+        "children": {
+            "follow": {"type": "added", "value": False},
+            "setting1": {"type": "unchanged", "value": "Value 1"},
+            "setting2": {"type": "removed", "value": 200},
+            "setting3": {
+                "type": "changed",
+                "old_value": True,
+                "new_value": None
+            },
+            "setting4": {"type": "added", "value": "blah blah"},
+            "setting5": {"type": "added", "value": {"key5": "value5"}},
+            "setting6": {
+                "type": "nested",
+                "children": {
+                    "doge": {
+                        "type": "nested",
+                        "children": {
+                            "wow": {
+                                "type": "changed",
+                                "old_value": "",
+                                "new_value": "so much"
+                            }
+                        },
+                    },
+                    "key": {"type": "unchanged", "value": "value"},
+                    "ops": {"type": "added", "value": "vops"},
+                },
+            },
+        },
+    },
+    "group1": {
+        "type": "nested",
+        "children": {
+            "baz": {"type": "changed", "old_value": "bas", "new_value": "bars"},
+            "foo": {"type": "unchanged", "value": "bar"},
+            "nest": {
+                "type": "changed",
+                "old_value": {"key": "value"},
+                "new_value": "str"
+            },
+        },
+    },
+    "group2": {
+        "type": "removed",
+        "value": {"abc": 12345, "deep": {"id": 45}}
+    },
+    "group3": {
+        "type": "added",
+        "value": {"deep": {"id": {"number": 45}}, "fee": 100500},
+    },
+}
 
 
-file1_yaml = os.path.join(FIXTURES_DIR, 'file1.yml')
-file2_yaml = os.path.join(FIXTURES_DIR, 'file2.yml')
+expected_plain_output = (
+    "Property 'common.follow' was added with value: false\n"
+    "Property 'common.setting2' was removed\n"
+    "Property 'common.setting3' was updated. From true to null\n"
+    "Property 'common.setting4' was added with value: 'blah blah'\n"
+    "Property 'common.setting5' was added with value: [complex value]\n"
+    "Property 'common.setting6.doge.wow' was updated. From '' to 'so much'\n"
+    "Property 'common.setting6.ops' was added with value: 'vops'\n"
+    "Property 'group1.baz' was updated. From 'bas' to 'bars'\n"
+    "Property 'group1.nest' was updated. From [complex value] to 'str'\n"
+    "Property 'group2' was removed\n"
+    "Property 'group3' was added with value: [complex value]"
+)
 
 
-flat_file1_json = os.path.join(FIXTURES_DIR, 'flat_file1.json')
-flat_file2_json = os.path.join(FIXTURES_DIR, 'flat_file2.json')
+expected_json_output = json.dumps(expected_diff, indent=2, sort_keys=True)
 
 
-flat_file1_yaml = os.path.join(FIXTURES_DIR, 'flat_file1.yml')
-flat_file2_yaml = os.path.join(FIXTURES_DIR, 'flat_file2.yml')
-
-
-with open(os.path.join(FIXTURES_DIR, 'expected_diff.txt')) as f:
-    expected_diff = json.load(f)
-
-
-with open(os.path.join(FIXTURES_DIR, 'expected_plain_output.txt')) as f:
-    expected_plain_output = f.read().strip()
-
-
-with open(os.path.join(FIXTURES_DIR, 'expected_json_output.txt')) as f:
-    expected_json_output = f.read().strip()
-
-
-with open(os.path.join(FIXTURES_DIR, 'expected_flat_diff.txt')) as f:
-    expected_flat_diff = f.read().strip()
+expected_flat_diff = '''{
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}'''
 
 
 @pytest.fixture
@@ -73,9 +148,9 @@ def flat_yaml_data():
     return data1, data2
 
 
-def test_build_diff(json_data):
+def test_make_diff(json_data):
     data1, data2 = json_data
-    diff = build_diff(data1, data2)
+    diff = make_diff(data1, data2)
     assert diff == expected_diff
 
 
@@ -91,6 +166,7 @@ def test_generate_diff_yaml():
 
 def test_generate_diff_plain():
     diff = generate_diff(file1_json, file2_json, format_name='plain')
+    print("Actual plain output:\n", diff)
     assert diff == expected_plain_output
 
 
@@ -100,8 +176,8 @@ def test_generate_diff_json_format():
 
 
 def normalize_output(diff):
-    return (diff.replace("False", "false").replace("True", "true")
-                .replace(' ', '').replace('\n', ''))
+    return diff.replace("False", "false").replace("True", "true")\
+               .replace(' ', '').replace('\n', '')
 
 
 def test_generate_diff_flat_json():
@@ -110,9 +186,6 @@ def test_generate_diff_flat_json():
     )
     normalized_diff = normalize_output(diff)
     normalized_expected = normalize_output(expected_flat_diff)
-    if normalized_diff != normalized_expected:
-        print("Actual:", normalized_diff)
-        print("Expected:", normalized_expected)
     assert normalized_diff == normalized_expected
 
 
@@ -122,7 +195,4 @@ def test_generate_diff_flat_yaml():
     )
     normalized_diff = normalize_output(diff)
     normalized_expected = normalize_output(expected_flat_diff)
-    if normalized_diff != normalized_expected:
-        print("Actual:", normalized_diff)
-        print("Expected:", normalized_expected)
     assert normalized_diff == normalized_expected

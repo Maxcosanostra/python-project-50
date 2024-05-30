@@ -1,4 +1,4 @@
-def format_plain(diff):
+def make_plain_result(diff):
     lines = []
     process_diff(diff, lines)
     return '\n'.join(lines)
