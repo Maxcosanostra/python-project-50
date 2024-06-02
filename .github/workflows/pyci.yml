@@ -30,9 +30,17 @@ jobs:
       - name: Run tests
         run: poetry run pytest --cov=gendiff --cov-report=xml --cov-report=term tests/
 
-      - name: Upload coverage to Code Climate
+      - name: Download Code Climate Reporter
         run: |
-          poetry run codeclimate-test-reporter upload-coverage
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+
+      - name: Prepare coverage report
+        run: ./cc-test-reporter format-coverage --input-type coverage.py --output coverage/codeclimate.json
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
+      - name: Upload coverage to Code Climate
+        run: ./cc-test-reporter upload-coverage
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
