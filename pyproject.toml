@@ -16,6 +16,7 @@ pyyaml = "^6.0.1"
 pytest = "^7.4.2"
 pytest-cov = "^4.0.0"
 flake8 = "^6.0.0"
+codeclimate-test-reporter = "^0.2.3"
 
 [tool.poetry.scripts]
 gendiff = 'gendiff.scripts.gendiff:main'
