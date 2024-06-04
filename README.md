@@ -29,7 +29,9 @@
 
 ### Установка
 
-1. git clone https://github.com/Maxcosanostra/python-project-50
+1.```
+  git clone https://github.com/Maxcosanostra/python-project-50
+  ```
 2. cd python-project-50
 3. make package-install
 
@@ -40,7 +42,7 @@
 
 Для сранения двух файлов используйте команду: __gendiff flat_file1.json flat_file2.json__
 
-https://asciinema.org/a/MJPjs1zTfxIxW4aDTQXFntI8T
+[![asciicast](https://asciinema.org/a/MJPjs1zTfxIxW4aDTQXFntI8T.svg)(https://asciinema.org/a/MJPjs1zTfxIxW4aDTQXFntI8T)
 
 ---
 
@@ -49,7 +51,7 @@ https://asciinema.org/a/MJPjs1zTfxIxW4aDTQXFntI8T
 
 Для сранения двух файлов используйте команду: __gendiff flat_file1.yml flat_file2.yml__
 
-https://asciinema.org/a/ti2HW6koM4Uq3gITXJTIEZFZz
+[![asciicast](https://asciinema.org/a/ti2HW6koM4Uq3gITXJTIEZFZz.svg)(https://asciinema.org/a/ti2HW6koM4Uq3gITXJTIEZFZz)
 
 ---
 
@@ -58,7 +60,7 @@ https://asciinema.org/a/ti2HW6koM4Uq3gITXJTIEZFZz
 
 Для сранения двух файлов используйте команду: __gendiff file1.json file2.json__
 
-https://asciinema.org/a/VsptnAtA6tyjaleMM9nm0mwef
+[![asciicast](https://asciinema.org/a/VsptnAtA6tyjaleMM9nm0mwef.svg)(https://asciinema.org/a/VsptnAtA6tyjaleMM9nm0mwef)
 
 ---
 
@@ -68,7 +70,9 @@ Plain формат представляет данные в линейном в�
 
 Для сранения двух файлов используйте команду: __gendiff --format plain file1.json file2.json__
 
-https://asciinema.org/a/tFREpk5fq1ehMygKq8iciX7yx
+[![asciicast](https://asciinema.org/a/tFREpk5fq1ehMygKq8iciX7yx.svg)(https://asciinema.org/a/tFREpk5fq1ehMygKq8iciX7yx)
+
+---
 
 ### Вывод в JSON:
 Данный вывод удобен для широкого применения, так как JSON формат поддерживается всеми современными языками программирования.
@@ -77,4 +81,4 @@ JSON поддерживает сложные структуры данных, т
 
 Для сранения двух файлов используйте команду: __gendiff --format json file1.json file2.json__
 
-https://asciinema.org/a/pC4g0avqpWzOMq7r5XrpzOQeg
+[![asciicast](https://asciinema.org/a/pC4g0avqpWzOMq7r5XrpzOQeg.svg)(https://asciinema.org/a/pC4g0avqpWzOMq7r5XrpzOQeg)
