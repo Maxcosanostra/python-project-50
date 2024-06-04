@@ -29,9 +29,7 @@
 
 ### Установка
 
-1.```
-  git clone https://github.com/Maxcosanostra/python-project-50
-  ```
+1. git clone https://github.com/Maxcosanostra/python-project-50
 2. cd python-project-50
 3. make package-install
 
