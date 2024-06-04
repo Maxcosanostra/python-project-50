@@ -10,7 +10,7 @@
 ---
 
 ### Описание 
-Вычислитель отличий - это универсальная программа, которая принимает на вход два пути до конфигурационных файлов и возвращает описание различий между структурами данных файлов. 
+Вычислитель отличий - это универсальная программа, которая принимает на вход путь до конфигурационных файлов и возвращает описание различий между структурами данных файлов. 
 Использование инструмента gendiff ликвидирует необходимость в дополнительной и оригинальной копии каталога.
 
 * Поддержка форматов: json/yaml
@@ -52,7 +52,7 @@
 gendiff flat_file1.json flat_file2.json
 ```
 
-[![asciicast](https://asciinema.org/a/MJPjs1zTfxIxW4aDTQXFntI8T.svg)(https://asciinema.org/a/MJPjs1zTfxIxW4aDTQXFntI8T)
+[![asciicast](https://asciinema.org/a/MJPjs1zTfxIxW4aDTQXFntI8T.svg)](https://asciinema.org/a/MJPjs1zTfxIxW4aDTQXFntI8T)
 
 ---
 
@@ -64,7 +64,7 @@ gendiff flat_file1.json flat_file2.json
 gendiff flat_file1.yml flat_file2.yml
 ```
 
-[![asciicast](https://asciinema.org/a/ti2HW6koM4Uq3gITXJTIEZFZz.svg)(https://asciinema.org/a/ti2HW6koM4Uq3gITXJTIEZFZz)
+[![asciicast](https://asciinema.org/a/ti2HW6koM4Uq3gITXJTIEZFZz.svg)](https://asciinema.org/a/ti2HW6koM4Uq3gITXJTIEZFZz)
 
 ---
 
@@ -76,7 +76,7 @@ gendiff flat_file1.yml flat_file2.yml
 gendiff file1.json file2.json
 ```
 
-[![asciicast](https://asciinema.org/a/VsptnAtA6tyjaleMM9nm0mwef.svg)(https://asciinema.org/a/VsptnAtA6tyjaleMM9nm0mwef)
+[![asciicast](https://asciinema.org/a/VsptnAtA6tyjaleMM9nm0mwef.svg)](https://asciinema.org/a/VsptnAtA6tyjaleMM9nm0mwef)
 
 ---
 
@@ -89,7 +89,7 @@ Plain формат представляет данные в линейном в�
 gendiff --format plain file1.json file2.json
 ```
 
-[![asciicast](https://asciinema.org/a/tFREpk5fq1ehMygKq8iciX7yx.svg)(https://asciinema.org/a/tFREpk5fq1ehMygKq8iciX7yx)
+[![asciicast](https://asciinema.org/a/tFREpk5fq1ehMygKq8iciX7yx.svg)](https://asciinema.org/a/tFREpk5fq1ehMygKq8iciX7yx)
 
 ---
 
@@ -103,7 +103,7 @@ JSON поддерживает сложные структуры данных, т
 gendiff --format json file1.json file2.json
 ```
 
-[![asciicast](https://asciinema.org/a/pC4g0avqpWzOMq7r5XrpzOQeg.svg)(https://asciinema.org/a/pC4g0avqpWzOMq7r5XrpzOQeg)
+[![asciicast](https://asciinema.org/a/pC4g0avqpWzOMq7r5XrpzOQeg.svg)](https://asciinema.org/a/pC4g0avqpWzOMq7r5XrpzOQeg)
 
 ---
 
