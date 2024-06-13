@@ -1,47 +1,4 @@
-def make_plain_result(diff):
-    lines = []
-    process_diff(diff, lines)
-    return '\n'.join(lines)
-
-
-def process_diff(node, lines, parent=''):
-    for key, value in sorted(node.items()):
-        full_path = f"{parent}.{key}" if parent else key
-        process_key_value(key, value, full_path, lines)
-
-
-def process_key_value(key, value, full_path, lines):
-    if isinstance(value, dict) and 'type' not in value:
-        process_diff(value, lines, full_path)
-    else:
-        result = format_node(full_path, value)
-        if result:
-            lines.append(result)
-
-
-def format_node(full_path, node):
-    status = node['type']
-    if status == 'added':
-        return (
-            f"Property '{full_path}' was added with value: "
-            f"{format_value(node['value'])}"
-        )
-    elif status == 'removed':
-        return f"Property '{full_path}' was removed"
-    elif status == 'changed':
-        return (
-            f"Property '{full_path}' was updated. "
-            f"From {format_value(node['old_value'])} "
-            f"to {format_value(node['new_value'])}"
-        )
-    elif status == 'nested':
-        nested_lines = []
-        process_diff(node['children'], nested_lines, full_path)
-        return '\n'.join(nested_lines)
-    return ''
-
-
-def format_value(value):
+def to_str(value):
     if isinstance(value, dict):
         return '[complex value]'
     elif isinstance(value, str):
@@ -52,3 +9,33 @@ def format_value(value):
         return str(value).lower()
     else:
         return str(value)
+
+
+def make_plain_result(diff):
+    def _iter(diff, path=''):
+        res = []
+        for key, data in diff.items():
+            current_path = f'{path}.{key}' if path else key
+            match data['type']:
+                case 'added':
+                    value = to_str(data['value'])
+                    res.append(
+                        f"Property '{current_path}' "
+                        f"was added with value: {value}"
+                    )
+                case 'removed':
+                    res.append(f"Property '{current_path}' was removed")
+                case 'changed':
+                    old_value = to_str(data['old_value'])
+                    new_value = to_str(data['new_value'])
+                    res.append(
+                        f"Property '{current_path}' was updated. "
+                        f"From {old_value} to {new_value}"
+                    )
+                case 'nested':
+                    res.append(_iter(data['children'], current_path))
+                case 'unchanged':
+                    continue
+        return '\n'.join(res)
+
+    return _iter(diff)

@@ -1,8 +1,8 @@
 def build_diff(data1, data2):
     diff = {}
-    keys = set(data1.keys()) | set(data2.keys())
+    keys = sorted(data1.keys() | data2.keys())
 
-    for key in sorted(keys):
+    for key in keys:
         value1 = data1.get(key)
         value2 = data2.get(key)
 
