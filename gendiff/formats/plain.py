@@ -7,8 +7,6 @@ def to_str(value):
         return 'null'
     elif isinstance(value, bool):
         return str(value).lower()
-    else:
-        return str(value)
 
 
 def make_plain_result(diff):
@@ -33,9 +31,14 @@ def make_plain_result(diff):
                         f"From {old_value} to {new_value}"
                     )
                 case 'nested':
-                    res.append(_iter(data['children'], current_path))
+                    res.extend(_iter(data['children'], current_path))
                 case 'unchanged':
                     continue
-        return '\n'.join(res)
+                case _:
+                    raise ValueError(
+                        f"Unsupported node type at path "
+                        f"'{current_path}': {data['type']}"
+                    )
+        return res
 
-    return _iter(diff)
+    return '\n'.join(_iter(diff))

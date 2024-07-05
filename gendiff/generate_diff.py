@@ -4,15 +4,17 @@ from gendiff.parser import parse_data
 import os
 
 
+PATH_THROUGH_FIXTURE = os.path.abspath('tests/fixtures')
+
+
 def get_file_format(file_path):
     _, extension = os.path.splitext(file_path)
     return extension[1:]
 
 
 def read_and_parse_file(file_path):
-    # Добавил относительный путь к файлам в fixtures
     if not os.path.isabs(file_path):
-        file_path = os.path.join('tests/fixtures', file_path)
+        file_path = os.path.join(PATH_THROUGH_FIXTURE, file_path)
     format_file = get_file_format(file_path)
     with open(file_path) as f:
         content = f.read()

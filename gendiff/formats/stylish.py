@@ -48,6 +48,11 @@ def make_stylish_result(diff):
                     nested_diff = _iter(item['children'], spaces_count + 4)
                     lines.append(f"{indent}  {key}: {nested_diff}")
 
+                case _:
+                    raise ValueError(
+                        f"Unsupported node type at key: {key}, item: {item}"
+                    )
+
         formatted_string = '\n'.join(lines)
         end_indent = ' ' * (spaces_count - 2)
         return f'{{\n{formatted_string}\n{end_indent}}}'
