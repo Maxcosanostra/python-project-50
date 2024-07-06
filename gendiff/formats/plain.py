@@ -7,6 +7,8 @@ def to_str(value):
         return 'null'
     elif isinstance(value, bool):
         return str(value).lower()
+    else:
+        return str(value)
 
 
 def make_plain_result(diff):
